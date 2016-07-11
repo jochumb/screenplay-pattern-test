@@ -19,15 +19,6 @@ public class UseTheApi implements Ability {
 
     private QueryResult queryResult;
 
-    public UseTheApi() {
-        twitter = TwitterFactory.getSingleton();
-        Broadcaster.getEventBus().register(this);
-    }
-
-    public static UseTheApi withDefaultContext() {
-        return new UseTheApi();
-    }
-
     public static UseTheApi as(Actor actor) {
         if (actor.abilityTo(UseTheApi.class) == null) {
             throw new ActorCannotUseTheApiException(actor.getName());
@@ -35,14 +26,13 @@ public class UseTheApi implements Ability {
         return actor.abilityTo(UseTheApi.class).asActor(actor);
     }
 
-    public Twitter getApi() {
-        return twitter;
+    public static UseTheApi withDefaultContext() {
+        return new UseTheApi();
     }
 
-    @Override
-    public <T extends Ability> T asActor(Actor actor) {
-        this.actor = actor;
-        return (T) this;
+    public UseTheApi() {
+        twitter = TwitterFactory.getSingleton();
+        Broadcaster.getEventBus().register(this);
     }
 
     public void searchFor(String query) {
@@ -59,5 +49,11 @@ public class UseTheApi implements Ability {
            resultList.add(status.getText());
         }
         return resultList;
+    }
+
+    @Override
+    public <T extends Ability> T asActor(Actor actor) {
+        this.actor = actor;
+        return (T) this;
     }
 }

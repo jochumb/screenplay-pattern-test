@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Serenity project with JUnit and WebDriver</name>
+    <name>Serenity project for testing Screenplay pattern abilities</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

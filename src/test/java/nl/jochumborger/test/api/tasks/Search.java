@@ -19,7 +19,7 @@ public class Search implements Task {
         this.searchQuery = searchQuery;
     }
 
-    @Step("Search for text")
+    @Step("Search for text: #searchQuery")
     public <T extends Actor> void performAs(T actor) {
         UseTheApi.as(actor).searchFor(searchQuery);
     }
