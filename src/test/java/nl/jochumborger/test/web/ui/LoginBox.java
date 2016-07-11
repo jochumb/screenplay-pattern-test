@@ -9,5 +9,5 @@ import org.openqa.selenium.By;
 public class LoginBox {
     public static Target USERNAME_FIELD = Target.the("username field").located(By.id("signin-email"));
     public static Target PASSWORD_FIELD = Target.the("password field").located(By.id("signin-password"));
-    public static Target LOGIN_BUTTON = Target.the("password field").located(By.cssSelector("button.submit"));
+    public static Target LOGIN_BUTTON = Target.the("login button").located(By.cssSelector("button.submit"));
 }

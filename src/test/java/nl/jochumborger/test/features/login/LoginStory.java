@@ -37,6 +37,9 @@ public class LoginStory {
     @Steps
     OpenTwitter openTwitter;
 
+    @Steps
+    Logout logout;
+
     @Before
     public void lexieCanBrowseTheWeb() {
         lexie.can(BrowseTheWeb.with(herBrowser));
@@ -56,7 +59,7 @@ public class LoginStory {
 
     @After
     public void logout() {
-        lexie.attemptsTo(Logout.now());
+        lexie.attemptsTo(logout);
     }
 
 }
