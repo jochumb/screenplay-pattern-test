@@ -21,7 +21,6 @@ public class CheckNumberOfResults implements Question<Boolean> {
     }
 
     public static Question<Boolean> exactly(int number) {
-        System.out.println("Query exact number of tweets");
         return new CheckNumberOfResults(number, Operator.EQ);
     }
 
@@ -34,20 +33,11 @@ public class CheckNumberOfResults implements Question<Boolean> {
     }
 
     @Override
-    public Boolean answeredBy(Actor actor) {
-        System.out.println("Get Answer");
-        List<String> queryResult = new ArrayList<>();
-        try {
-            queryResult = UseTheApi.as(actor).getQueryResultAsList();
-        } catch (UseTheApi.ActorCannotUseTheApiException e) {
-            e.printStackTrace();
-        }
+    public Boolean answeredBy(Actor actor) {List<String> queryResult = new ArrayList<>();
+        queryResult = UseTheApi.as(actor).getQueryResultAsList();
 
         Boolean result = false;
         int numTweets = queryResult.size();
-
-        System.out.println("Num tweets: "+ numTweets);
-        System.out.println("Expected: "+ number);
 
         switch(operator) {
             case EQ:
@@ -62,8 +52,6 @@ public class CheckNumberOfResults implements Question<Boolean> {
             default:
                 break;
         }
-
-        System.out.println("Check: "+ result);
 
         return result;
     }

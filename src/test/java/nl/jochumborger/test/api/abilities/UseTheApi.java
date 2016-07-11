@@ -3,6 +3,7 @@ package nl.jochumborger.test.api.abilities;
 import net.serenitybdd.core.eventbus.Broadcaster;
 import net.serenitybdd.screenplay.Ability;
 import net.serenitybdd.screenplay.Actor;
+import nl.jochumborger.test.api.exceptions.ActorCannotUseTheApiException;
 import twitter4j.*;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class UseTheApi implements Ability {
         return new UseTheApi();
     }
 
-    public static UseTheApi as(Actor actor) throws ActorCannotUseTheApiException {
+    public static UseTheApi as(Actor actor) {
         if (actor.abilityTo(UseTheApi.class) == null) {
             throw new ActorCannotUseTheApiException(actor.getName());
         }
@@ -48,9 +49,8 @@ public class UseTheApi implements Ability {
         try {
             queryResult = twitter.search(new Query(query));
         } catch (TwitterException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO: throw runtime exception
         }
-        System.out.println("Number of tweets: "+ queryResult.getTweets().size());
     }
 
     public List<String> getQueryResultAsList() {
@@ -58,13 +58,6 @@ public class UseTheApi implements Ability {
         for (Status status : queryResult.getTweets()) {
            resultList.add(status.getText());
         }
-        System.out.println("QueryResults requested");
         return resultList;
-    }
-
-    public static class ActorCannotUseTheApiException extends Throwable {
-        public ActorCannotUseTheApiException(String name) {
-            super(name);
-        }
     }
 }
