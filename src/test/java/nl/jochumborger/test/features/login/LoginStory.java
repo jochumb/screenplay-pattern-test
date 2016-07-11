@@ -2,16 +2,17 @@ package nl.jochumborger.test.features.login;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
+import nl.jochumborger.test.twitter.User;
 import nl.jochumborger.test.web.questions.TheCurrentUser;
 import nl.jochumborger.test.web.tasks.Login;
 import nl.jochumborger.test.web.tasks.Logout;
 import nl.jochumborger.test.web.tasks.OpenTwitter;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -25,6 +26,8 @@ import static org.hamcrest.Matchers.containsString;
  */
 @RunWith(SerenityRunner.class)
 public class LoginStory {
+
+    User twitterUser = User.getInstance();
 
     Actor lexie = Actor.named("Lexie");
 
@@ -43,11 +46,11 @@ public class LoginStory {
     public void log_in_with_correct_credentials_should_show_twitter_feed() {
         givenThat(lexie).wasAbleTo(openTwitter);
 
-        when(lexie).attemptsTo(Login.withCredentials("HubsdjJdhsjs","djh9e8whgf9"));
+        when(lexie).attemptsTo(Login.withCredentials(twitterUser.getUsername(),twitterUser.getPassword()));
 
         then(lexie).should(
-                eventually(GivenWhenThen.seeThat(TheCurrentUser.username(), containsString("Hubsdj Jdhsjs"))),
-                seeThat(TheCurrentUser.twitterHandle(), containsString("HubsdjJdhsjs"))
+                eventually(seeThat(TheCurrentUser.username(), containsString(twitterUser.getDisplayName()))),
+                seeThat(TheCurrentUser.twitterHandle(), containsString(twitterUser.getHandle()))
         );
     }
 

@@ -1,7 +1,6 @@
 package nl.jochumborger.test.api.questions;
 
 import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.Consequence;
 import net.serenitybdd.screenplay.Question;
 import nl.jochumborger.test.api.abilities.UseTheApi;
 
@@ -22,6 +21,7 @@ public class CheckNumberOfResults implements Question<Boolean> {
     }
 
     public static Question<Boolean> exactly(int number) {
+        System.out.println("Query exact number of tweets");
         return new CheckNumberOfResults(number, Operator.EQ);
     }
 
@@ -35,6 +35,7 @@ public class CheckNumberOfResults implements Question<Boolean> {
 
     @Override
     public Boolean answeredBy(Actor actor) {
+        System.out.println("Get Answer");
         List<String> queryResult = new ArrayList<>();
         try {
             queryResult = UseTheApi.as(actor).getQueryResultAsList();
@@ -44,6 +45,9 @@ public class CheckNumberOfResults implements Question<Boolean> {
 
         Boolean result = false;
         int numTweets = queryResult.size();
+
+        System.out.println("Num tweets: "+ numTweets);
+        System.out.println("Expected: "+ number);
 
         switch(operator) {
             case EQ:
@@ -58,6 +62,8 @@ public class CheckNumberOfResults implements Question<Boolean> {
             default:
                 break;
         }
+
+        System.out.println("Check: "+ result);
 
         return result;
     }

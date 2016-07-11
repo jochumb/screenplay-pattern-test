@@ -50,6 +50,7 @@ public class UseTheApi implements Ability {
         } catch (TwitterException e) {
             e.printStackTrace();
         }
+        System.out.println("Number of tweets: "+ queryResult.getTweets().size());
     }
 
     public List<String> getQueryResultAsList() {
@@ -57,11 +58,13 @@ public class UseTheApi implements Ability {
         for (Status status : queryResult.getTweets()) {
            resultList.add(status.getText());
         }
+        System.out.println("QueryResults requested");
         return resultList;
     }
 
     public static class ActorCannotUseTheApiException extends Throwable {
         public ActorCannotUseTheApiException(String name) {
+            super(name);
         }
     }
 }
